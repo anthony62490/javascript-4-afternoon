@@ -21,14 +21,14 @@ function outer() {
   Above you're given a function that returns another function which has a closure over the name variable.
   Invoke outer saving the return value into another variable called 'inner'.
 */
-  
-// Code Here
 
-
+//code here
+const inner = outer();
 
 //Once you do that, invoke inner.
 
 //Code Here
+inner();
 
 
 
@@ -52,8 +52,8 @@ function callFriend(name) {
 */
 
 //Code Here
-
-
+const callJake = callFriend("Jake");
+callJake('435-555-9248');
 
 ////////// PROBLEM 3 //////////
 
@@ -62,15 +62,22 @@ function callFriend(name) {
 */
 
 //Code Here
-
+function makeCounter()
+{
+  let num=0;
+  return function()
+  {
+    return num += 1;
+  };
+}
 
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+var count = makeCounter();
+count(); // 1
+count(); // 2
+count(); // 3
+count(); // 4
 
 
 
@@ -89,15 +96,22 @@ function counterFactory(value) {
   // Code here.
 
   return {
-
+    inc()
+    {
+      return value += 1;
+    },
+    dec()
+    {
+      return value -= 1;
+    }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -113,6 +127,10 @@ function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
+  return function()
+  {
+    return `${welcomeText} ${firstname} ${lastname}.`;
+  };
 
   //Uncommment this to return the value of your message function
   //return message;
@@ -143,11 +161,12 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod: () => {return privateMethod()}
   };
 })();
 
-
+var test = module.publicMethod();
+console.log(test);
 
 ////////// PROBLEM 7 //////////
 
@@ -163,6 +182,14 @@ function secretNumber() {
 
   return {
     // Code here
+    addToSecret(num)
+    {
+      return secret += num;
+    },
+    takeAwayFromSecret(num)
+    {
+      return secret -= num;
+    }
   };
 }
 
@@ -180,17 +207,28 @@ function secretNumber() {
     4 seconds after call - log 4
     5 seconds after call - log 5
 
-  However, because each call to console.log occurs after the loop has finished, the value of i has changed before the console.log executes.
+  However, because each call to console.log occurs after the loop has finished, 
+  the value of i has changed before the console.log executes.
   We'll need to use a closure to preserve a reference to i at the time of execution.
   
   Fix the code below to log the desired output.
 */
 
-function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+// function timeOutCounter() {
+//   for (var i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// timeOutCounter();
+
+function timeOutCounter() 
+{
+  for (var i = 0; i <= 5; i++) 
+  {
+    let j = i;
+    setTimeout(function() {console.log(j);}, j * 1000);
   }
 }
 timeOutCounter();
